@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-balance-scale"></i>
+                <span>Legal AI Assistant</span>
+            </div>
+        </div>
+        <div class="header-center">
+            <nav class="main-nav">
+                <a href="#" class="nav-link active" data-nav="home">
+                    <i class="fas fa-home"></i>
+                    <span>Головна</span>
+                </a>
+                <a href="#" class="nav-link" data-nav="history">
+                    <i class="fas fa-history"></i>
+                    <span>Історія</span>
+                </a>
+                <a href="#" class="nav-link" data-nav="favorites">
+                    <i class="fas fa-star"></i>
+                    <span>Обране</span>
+                </a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            <div class="user-profile" id="userProfile">
+                <div class="avatar">
+                    <img src="https://ui-avatars.com/api/?name=Олена+Петренко&background=6366f1&color=fff&size=40" alt="User">
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Олена Петренко</span>
+                    <span class="user-role">Юридичний відділ</span>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Screen -->
+        <section id="homeScreen" class="screen active">
+            <div class="welcome-section">
+                <h1>Вітаємо, Олено! 👋</h1>
+                <p>Оберіть категорію для початку роботи з юридичним асистентом</p>
+            </div>
+
+            <div class="tiles-grid">
+                <!-- Row 1 -->
+                <div class="tile" data-tile="legal-questions">
+                    <div class="tile-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>Загальноправові питання</h3>
+                    <p>Пошук відповідей у правових базах та законодавстві</p>
+                    <div class="tile-footer">
+                        <span class="tile-stat"><i class="fas fa-database"></i> 4 джерела</span>
+                    </div>
+                </div>
+
+                <div class="tile" data-tile="quick-search">
+                    <div class="tile-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Швидкий пошук рішень</h3>
+                    <p>Знаходьте швидкі відповіді на робочі питання</p>
+                    <div class="tile-footer">
+                        <span class="tile-stat"><i class="fas fa-bolt"></i> Миттєвий пошук</span>
+                    </div>
+                </div>
+
+                <div class="tile" data-tile="internal-docs">
+                    <div class="tile-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3>Внутрішні документи</h3>
+                    <p>Робота в контексті документів підрозділу</p>
+                    <div class="tile-footer">
+                        <span class="tile-stat"><i class="fas fa-file-alt"></i> 156 документів</span>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="tile" data-tile="my-requests">
+                    <div class="tile-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>Мої звернення</h3>
+                    <p>Перегляд та пошук по попереднім зверненням</p>
+                    <div class="tile-footer">
+                        <span class="tile-stat"><i class="fas fa-ticket-alt"></i> 12 активних</span>
+                    </div>
+                </div>
+
+                <div class="tile" data-tile="compliance">
+                    <div class="tile-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Оцінка ризиків / Комплаєнс</h3>
+                    <p>Аналіз юридичних осіб та перевірка контрагентів</p>
+                    <div class="tile-footer">
+                        <span class="tile-stat"><i class="fas fa-check-circle"></i> Автоматична перевірка</span>
+                    </div>
+                </div>
+
+                <div class="tile" data-tile="contracts">
+                    <div class="tile-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3>Робота з контрактами</h3>
+                    <p>Пошук та аналіз договорів з постачальниками</p>
+                    <div class="tile-footer">
+                        <span class="tile-stat"><i class="fas fa-handshake"></i> 89 контрактів</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="stat-info">
+                        <span class="stat-value">2.5 сек</span>
+                        <span class="stat-label">Середній час відповіді</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-double"></i>
+                    <div class="stat-info">
+                        <span class="stat-value">98.7%</span>
+                        <span class="stat-label">Точність відповідей</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-info">
+                        <span class="stat-value">1,247</span>
+                        <span class="stat-label">Користувачів сьогодні</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tile Screen Template -->
+        <section id="tileScreen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" id="backBtn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Назад</span>
+                </button>
+                <h2 id="tileTitle"></h2>
+            </div>
+
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <p class="search-hint">
+                    <span id="exampleLink" class="example-link"></span>
+                </p>
+            </div>
+
+            <!-- Previous tickets section (only for my-requests) -->
+            <div id="previousTickets" class="previous-tickets" style="display: none;">
+                <h3>Попередні звернення</h3>
+                <div class="tickets-list">
+                    <div class="ticket-item" data-ticket="password">
+                        <div class="ticket-icon"><i class="fas fa-key"></i></div>
+                        <div class="ticket-info">
+                            <span class="ticket-title">Запит на відновлення пароля SK</span>
+                            <span class="ticket-date">15 січня 2026</span>
+                        </div>
+                        <span class="ticket-status resolved">Вирішено</span>
+                    </div>
+                    <div class="ticket-item" data-ticket="reb">
+                        <div class="ticket-icon"><i class="fas fa-broadcast-tower"></i></div>
+                        <div class="ticket-info">
+                            <span class="ticket-title">Можливості придбання засобів РЕБ</span>
+                            <span class="ticket-date">10 січня 2026</span>
+                        </div>
+                        <span class="ticket-status pending">В обробці</span>
+                    </div>
+                    <div class="ticket-item" data-ticket="vpo">
+                        <div class="ticket-icon"><i class="fas fa-hands-helping"></i></div>
+                        <div class="ticket-info">
+                            <span class="ticket-title">Допомога працівникам зі статусом ВПО</span>
+                            <span class="ticket-date">5 січня 2026</span>
+                        </div>
+                        <span class="ticket-status resolved">Вирішено</span>
+                    </div>
+                    <div class="ticket-item" data-ticket="salary">
+                        <div class="ticket-icon"><i class="fas fa-hryvnia"></i></div>
+                        <div class="ticket-info">
+                            <span class="ticket-title">Індексація зарплати за 2025 рік</span>
+                            <span class="ticket-date">28 грудня 2025</span>
+                        </div>
+                        <span class="ticket-status resolved">Вирішено</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="searchResults" class="search-results" style="display: none;">
+                <div class="results-header">
+                    <h3><i class="fas fa-list-ul"></i> Результати пошуку</h3>
+                    <span class="results-count"></span>
+                </div>
+                <div id="resultsContainer" class="results-container"></div>
+            </div>
+        </section>
+
+        <!-- Document Detail Screen -->
+        <section id="documentScreen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" id="docBackBtn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>До результатів</span>
+                </button>
+                <div class="doc-actions">
+                    <button class="action-btn"><i class="fas fa-bookmark"></i></button>
+                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                    <button class="action-btn"><i class="fas fa-print"></i></button>
+                </div>
+            </div>
+
+            <div class="document-content">
+                <div class="doc-header">
+                    <div class="doc-source" id="docSource"></div>
+                    <h2 id="docTitle"></h2>
+                    <div class="doc-meta" id="docMeta"></div>
+                </div>
+                <div class="doc-body" id="docBody"></div>
+                <div class="doc-footer">
+                    <a href="#" class="source-link" id="sourceLink">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>Перейти до джерела</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-toggle" id="chatToggle">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Асистент</span>
+                </div>
+                <button class="chat-close" id="chatClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        Вітаю! Я ваш AI асистент. Чим можу допомогти?
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Введіть повідомлення..." id="chatInput">
+                <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Аналізуємо запит...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
