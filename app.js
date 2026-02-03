@@ -1080,13 +1080,11 @@ function displayResults(results) {
                 <span><i class="fas fa-percentage"></i> ${currentLang === 'en' ? 'Relevance' : 'Релевантність'}: ${result.relevance}</span>
             </div>
             <div class="feedback-buttons">
-                <button class="feedback-btn like" data-index="${index}" onclick="event.stopPropagation(); handleFeedback(this, 'like')">
+                <button class="feedback-btn like" data-index="${index}" onclick="event.stopPropagation(); handleFeedback(this, 'like')" title="${currentLang === 'en' ? 'Helpful' : 'Корисно'}">
                     <i class="fas fa-thumbs-up"></i>
-                    <span>${currentLang === 'en' ? 'Helpful' : 'Корисно'}</span>
                 </button>
-                <button class="feedback-btn dislike" data-index="${index}" onclick="event.stopPropagation(); handleFeedback(this, 'dislike')">
+                <button class="feedback-btn dislike" data-index="${index}" onclick="event.stopPropagation(); handleFeedback(this, 'dislike')" title="${currentLang === 'en' ? 'Not helpful' : 'Не корисно'}">
                     <i class="fas fa-thumbs-down"></i>
-                    <span>${currentLang === 'en' ? 'Not helpful' : 'Не корисно'}</span>
                 </button>
             </div>
         `;
