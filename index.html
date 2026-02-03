@@ -12,10 +12,10 @@
     <!-- Header -->
     <header class="header">
         <div class="header-left">
-            <div class="logo">
+            <a href="#" class="logo" id="logoLink">
                 <i class="fas fa-balance-scale"></i>
-                <span>Legal AI Assistant</span>
-            </div>
+                <span data-i18n="app.title">Legal AI Assistant</span>
+            </a>
         </div>
         <div class="header-center">
             <nav class="main-nav">
@@ -157,54 +157,69 @@
                 <p>Оберіть категорію для початку роботи з юридичним асистентом</p>
             </div>
 
-            <div class="tiles-grid">
+            <div class="tiles-grid" id="tilesGrid">
                 <!-- Row 1 -->
                 <div class="tile" data-tile="legal-questions">
+                    <button class="tile-favorite" data-favorite="legal-questions" title="Додати в обране">
+                        <i class="far fa-star"></i>
+                    </button>
                     <div class="tile-icon">
                         <i class="fas fa-gavel"></i>
                     </div>
-                    <h3>Загальноправові питання</h3>
-                    <p>Пошук відповідей у правових базах та законодавстві</p>
+                    <h3 data-i18n="tiles.legalQuestions">Загальноправові питання</h3>
+                    <p data-i18n="tiles.legalQuestionsDesc">Пошук відповідей у правових базах та законодавстві</p>
                     <div class="tile-footer">
-                        <span class="tile-stat"><i class="fas fa-database"></i> 4 джерела</span>
+                        <span class="tile-stat"><i class="fas fa-database"></i> <span data-i18n="tiles.sources">4 джерела</span></span>
                     </div>
                 </div>
 
                 <div class="tile" data-tile="quick-search">
+                    <button class="tile-favorite" data-favorite="quick-search" title="Додати в обране">
+                        <i class="far fa-star"></i>
+                    </button>
                     <div class="tile-icon">
                         <i class="fas fa-search"></i>
                     </div>
-                    <h3>Швидкий пошук рішень</h3>
-                    <p>Знаходьте швидкі відповіді на робочі питання</p>
+                    <h3 data-i18n="tiles.quickSearch">Швидкий пошук рішень</h3>
+                    <p data-i18n="tiles.quickSearchDesc">Знаходьте швидкі відповіді на робочі питання</p>
                     <div class="tile-footer">
-                        <span class="tile-stat"><i class="fas fa-bolt"></i> Миттєвий пошук</span>
+                        <span class="tile-stat"><i class="fas fa-bolt"></i> <span data-i18n="tiles.instantSearch">Миттєвий пошук</span></span>
                     </div>
                 </div>
 
                 <div class="tile" data-tile="internal-docs">
+                    <button class="tile-favorite" data-favorite="internal-docs" title="Додати в обране">
+                        <i class="far fa-star"></i>
+                    </button>
                     <div class="tile-icon">
                         <i class="fas fa-folder-open"></i>
                     </div>
-                    <h3>Внутрішні документи</h3>
-                    <p>Робота в контексті документів підрозділу</p>
+                    <h3 data-i18n="tiles.internalDocs">Внутрішні документи</h3>
+                    <p data-i18n="tiles.internalDocsDesc">Робота в контексті документів підрозділу</p>
                     <div class="tile-footer">
-                        <span class="tile-stat"><i class="fas fa-file-alt"></i> 156 документів</span>
+                        <span class="tile-stat"><i class="fas fa-file-alt"></i> <span data-i18n="tiles.documents">156 документів</span></span>
                     </div>
                 </div>
 
                 <!-- Row 2 -->
                 <div class="tile" data-tile="my-requests">
+                    <button class="tile-favorite" data-favorite="my-requests" title="Додати в обране">
+                        <i class="far fa-star"></i>
+                    </button>
                     <div class="tile-icon">
                         <i class="fas fa-clipboard-list"></i>
                     </div>
-                    <h3>Мої звернення</h3>
-                    <p>Перегляд та пошук по попереднім зверненням</p>
+                    <h3 data-i18n="tiles.myRequests">Мої звернення</h3>
+                    <p data-i18n="tiles.myRequestsDesc">Перегляд та пошук по попереднім зверненням</p>
                     <div class="tile-footer">
-                        <span class="tile-stat"><i class="fas fa-ticket-alt"></i> 12 активних</span>
+                        <span class="tile-stat"><i class="fas fa-ticket-alt"></i> <span data-i18n="tiles.active">12 активних</span></span>
                     </div>
                 </div>
 
                 <div class="tile" data-tile="compliance">
+                    <button class="tile-favorite" data-favorite="compliance" title="Додати в обране">
+                        <i class="far fa-star"></i>
+                    </button>
                     <div class="tile-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
@@ -216,13 +231,16 @@
                 </div>
 
                 <div class="tile" data-tile="contracts">
+                    <button class="tile-favorite" data-favorite="contracts" title="Додати в обране">
+                        <i class="far fa-star"></i>
+                    </button>
                     <div class="tile-icon">
                         <i class="fas fa-file-contract"></i>
                     </div>
-                    <h3>Робота з контрактами</h3>
-                    <p>Пошук та аналіз договорів з постачальниками</p>
+                    <h3 data-i18n="tiles.contracts">Робота з контрактами</h3>
+                    <p data-i18n="tiles.contractsDesc">Пошук та аналіз договорів з постачальниками</p>
                     <div class="tile-footer">
-                        <span class="tile-stat"><i class="fas fa-handshake"></i> 89 контрактів</span>
+                        <span class="tile-stat"><i class="fas fa-handshake"></i> <span data-i18n="tiles.contractsCount">89 контрактів</span></span>
                     </div>
                 </div>
             </div>
@@ -252,12 +270,35 @@
             </div>
         </section>
 
+        <!-- Favorites Screen -->
+        <section id="favoritesScreen" class="screen">
+            <div class="screen-header">
+                <h2><i class="fas fa-star"></i> <span data-i18n="nav.favorites">Обране</span></h2>
+            </div>
+            <div class="favorites-content">
+                <div id="favoritesGrid" class="tiles-grid favorites-grid">
+                    <!-- Favorites will be rendered here -->
+                </div>
+                <div id="emptyFavorites" class="empty-state">
+                    <div class="empty-icon">
+                        <i class="far fa-star"></i>
+                    </div>
+                    <h3 data-i18n="favorites.emptyTitle">Немає обраних розділів</h3>
+                    <p data-i18n="favorites.emptyDesc">Додайте розділи в обране, натиснувши на зірочку на головній сторінці</p>
+                    <button class="btn-primary" id="goToHomeBtn">
+                        <i class="fas fa-home"></i>
+                        <span data-i18n="favorites.goHome">Перейти на головну</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- Tile Screen Template -->
         <section id="tileScreen" class="screen">
             <div class="screen-header">
                 <button class="back-btn" id="backBtn">
                     <i class="fas fa-arrow-left"></i>
-                    <span>Назад</span>
+                    <span data-i18n="common.back">Назад</span>
                 </button>
                 <h2 id="tileTitle"></h2>
             </div>

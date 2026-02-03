@@ -985,17 +985,53 @@ function displayResults(results) {
             <p class="result-excerpt">${result.excerpt}</p>
             <div class="result-meta">
                 <span><i class="fas fa-calendar"></i> ${result.date}</span>
-                <span><i class="fas fa-percentage"></i> Релевантність: ${result.relevance}</span>
+                <span><i class="fas fa-percentage"></i> ${currentLang === 'en' ? 'Relevance' : 'Релевантність'}: ${result.relevance}</span>
+            </div>
+            <div class="feedback-buttons">
+                <button class="feedback-btn like" data-index="${index}" onclick="event.stopPropagation(); handleFeedback(this, 'like')">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span>${currentLang === 'en' ? 'Helpful' : 'Корисно'}</span>
+                </button>
+                <button class="feedback-btn dislike" data-index="${index}" onclick="event.stopPropagation(); handleFeedback(this, 'dislike')">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span>${currentLang === 'en' ? 'Not helpful' : 'Не корисно'}</span>
+                </button>
             </div>
         `;
-        card.addEventListener('click', () => openDocument(index));
+        card.addEventListener('click', (e) => {
+            if (!e.target.closest('.feedback-btn')) {
+                openDocument(index);
+            }
+        });
         resultsContainer.appendChild(card);
     });
 
     const countSpan = document.querySelector('.results-count');
-    countSpan.textContent = `Знайдено: ${results.length}`;
+    countSpan.textContent = `${currentLang === 'en' ? 'Found' : 'Знайдено'}: ${results.length}`;
 
     searchResults.style.display = 'block';
+}
+
+// Handle feedback
+function handleFeedback(btn, type) {
+    const parent = btn.closest('.feedback-buttons');
+    parent.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Show thank you message
+    const msg = document.createElement('span');
+    msg.className = 'feedback-thanks';
+    msg.textContent = currentLang === 'en' ? ' Thank you!' : ' Дякуємо!';
+    msg.style.color = 'var(--success)';
+    msg.style.marginLeft = '0.5rem';
+    msg.style.fontSize = '0.85rem';
+
+    // Remove existing thanks
+    const existing = parent.querySelector('.feedback-thanks');
+    if (existing) existing.remove();
+
+    parent.appendChild(msg);
+    setTimeout(() => msg.remove(), 2000);
 }
 
 // Open document

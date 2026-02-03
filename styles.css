@@ -1941,3 +1941,321 @@ body {
         right: -1rem;
     }
 }
+
+/* ==================== SEARCH BUTTON FIX ==================== */
+.search-btn i {
+    color: var(--white) !important;
+}
+
+/* ==================== LOGO CLICKABLE ==================== */
+.logo {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* ==================== TILE FAVORITES ==================== */
+.tile {
+    position: relative;
+}
+
+.tile-favorite {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--light);
+    border: none;
+    color: var(--gray-light);
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tile-favorite:hover {
+    background: var(--warning);
+    color: var(--white);
+}
+
+.tile-favorite.active {
+    background: var(--warning);
+    color: var(--white);
+}
+
+.tile-favorite.active i {
+    font-weight: 900;
+}
+
+/* ==================== FAVORITES SCREEN ==================== */
+.favorites-content {
+    min-height: 400px;
+}
+
+.favorites-grid {
+    margin-bottom: 2rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.empty-icon i {
+    font-size: 2.5rem;
+    color: var(--gray-light);
+}
+
+.empty-state h3 {
+    font-size: 1.25rem;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: var(--radius);
+    color: var(--white);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ==================== LIKE/DISLIKE BUTTONS ==================== */
+.feedback-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--light);
+}
+
+.feedback-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 1rem;
+    background: var(--light);
+    border: none;
+    border-radius: var(--radius);
+    color: var(--gray);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.85rem;
+}
+
+.feedback-btn:hover {
+    background: var(--primary-light);
+    color: var(--white);
+}
+
+.feedback-btn.like:hover,
+.feedback-btn.like.active {
+    background: var(--success);
+    color: var(--white);
+}
+
+.feedback-btn.dislike:hover,
+.feedback-btn.dislike.active {
+    background: var(--danger);
+    color: var(--white);
+}
+
+.feedback-btn.active {
+    font-weight: 600;
+}
+
+/* Document feedback */
+.doc-feedback {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    background: var(--light);
+    border-top: 1px solid var(--light);
+}
+
+.doc-feedback span {
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+.doc-feedback .feedback-buttons {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* ==================== DARK THEME ==================== */
+body.dark-theme {
+    --dark: #f1f5f9;
+    --dark-light: #e2e8f0;
+    --gray: #94a3b8;
+    --gray-light: #64748b;
+    --light: #334155;
+    --white: #1e293b;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+}
+
+body.dark-theme .header {
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+}
+
+body.dark-theme .tile,
+body.dark-theme .stat-card,
+body.dark-theme .search-section,
+body.dark-theme .previous-tickets,
+body.dark-theme .result-card,
+body.dark-theme .document-content,
+body.dark-theme .profile-card,
+body.dark-theme .profile-nav,
+body.dark-theme .profile-section,
+body.dark-theme .timeline-item,
+body.dark-theme .history-stat-card,
+body.dark-theme .chat-window,
+body.dark-theme .notifications-dropdown,
+body.dark-theme .profile-dropdown,
+body.dark-theme .empty-state {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-theme .tile-favorite {
+    background: #334155;
+}
+
+body.dark-theme .search-box {
+    background: #334155;
+}
+
+body.dark-theme .search-box:focus-within {
+    background: #1e293b;
+}
+
+body.dark-theme .form-group input {
+    background: #334155;
+    border-color: #475569;
+    color: #f1f5f9;
+}
+
+body.dark-theme .ticket-item {
+    background: #334155;
+}
+
+body.dark-theme .ticket-icon {
+    background: #1e293b;
+}
+
+body.dark-theme .notification-item:hover,
+body.dark-theme .profile-menu-item:hover {
+    background: #334155;
+}
+
+body.dark-theme .dropdown-header,
+body.dark-theme .dropdown-footer,
+body.dark-theme .profile-dropdown-footer {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+body.dark-theme .doc-header {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+body.dark-theme .doc-footer,
+body.dark-theme .doc-feedback {
+    background: #0f172a;
+}
+
+body.dark-theme .message-content {
+    background: #334155;
+}
+
+body.dark-theme .chat-input input {
+    background: #334155;
+    border-color: #475569;
+    color: #f1f5f9;
+}
+
+body.dark-theme .loading-overlay {
+    background: rgba(15, 23, 42, 0.9);
+}
+
+body.dark-theme .filter-select,
+body.dark-theme .preference-select {
+    background: #1e293b;
+    border-color: #475569;
+    color: #f1f5f9;
+}
+
+body.dark-theme .security-item,
+body.dark-theme .notification-option {
+    background: #334155;
+}
+
+body.dark-theme .btn-secondary {
+    background: #334155;
+    border-color: #475569;
+    color: #94a3b8;
+}
+
+body.dark-theme .feedback-btn {
+    background: #334155;
+}
+
+/* ==================== CLICKABLE HISTORY ITEMS ==================== */
+.timeline-item {
+    cursor: pointer;
+}
+
+.timeline-item:hover .timeline-content h4 {
+    color: var(--primary);
+}
+
+/* ==================== NOTIFICATION CLICKABLE ==================== */
+.notification-item {
+    cursor: pointer;
+}
+
+.notification-text strong {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+.notification-text strong:hover {
+    text-decoration-style: solid;
+}
