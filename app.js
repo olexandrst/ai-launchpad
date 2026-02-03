@@ -916,6 +916,98 @@ const chatMessages = document.getElementById('chatMessages');
 // Current state
 let currentTile = null;
 let currentResults = null;
+let currentLang = 'uk';
+let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+// ==================== I18N TRANSLATIONS ====================
+const translations = {
+    uk: {
+        'app.title': 'Legal AI Assistant',
+        'nav.home': 'Головна',
+        'nav.history': 'Історія',
+        'nav.favorites': 'Обране',
+        'common.back': 'Назад',
+        'common.search': 'Пошук',
+        'tiles.legalQuestions': 'Загальноправові питання',
+        'tiles.legalQuestionsDesc': 'Пошук відповідей у правових базах та законодавстві',
+        'tiles.quickSearch': 'Швидкий пошук рішень',
+        'tiles.quickSearchDesc': 'Знаходьте швидкі відповіді на робочі питання',
+        'tiles.internalDocs': 'Внутрішні документи',
+        'tiles.internalDocsDesc': 'Робота в контексті документів підрозділу',
+        'tiles.myRequests': 'Мої звернення',
+        'tiles.myRequestsDesc': 'Перегляд та пошук по попереднім зверненням',
+        'tiles.compliance': 'Оцінка ризиків / Комплаєнс',
+        'tiles.complianceDesc': 'Аналіз юридичних осіб та перевірка контрагентів',
+        'tiles.contracts': 'Робота з контрактами',
+        'tiles.contractsDesc': 'Пошук та аналіз договорів з постачальниками',
+        'favorites.emptyTitle': 'Немає обраних розділів',
+        'favorites.emptyDesc': 'Додайте розділи в обране, натиснувши на зірочку на головній сторінці',
+        'favorites.goHome': 'Перейти на головну',
+        'welcome.title': 'Вітаємо, Олено! 👋',
+        'welcome.subtitle': 'Оберіть категорію для початку роботи з юридичним асистентом',
+        'feedback.helpful': 'Корисно',
+        'feedback.notHelpful': 'Не корисно',
+        'feedback.thanks': 'Дякуємо!',
+        'results.found': 'Знайдено',
+        'results.relevance': 'Релевантність'
+    },
+    en: {
+        'app.title': 'Legal AI Assistant',
+        'nav.home': 'Home',
+        'nav.history': 'History',
+        'nav.favorites': 'Favorites',
+        'common.back': 'Back',
+        'common.search': 'Search',
+        'tiles.legalQuestions': 'Legal Questions',
+        'tiles.legalQuestionsDesc': 'Search answers in legal databases and legislation',
+        'tiles.quickSearch': 'Quick Solutions',
+        'tiles.quickSearchDesc': 'Find quick answers to work questions',
+        'tiles.internalDocs': 'Internal Documents',
+        'tiles.internalDocsDesc': 'Work with department documents',
+        'tiles.myRequests': 'My Requests',
+        'tiles.myRequestsDesc': 'View and search previous requests',
+        'tiles.compliance': 'Risk Assessment / Compliance',
+        'tiles.complianceDesc': 'Legal entity analysis and counterparty verification',
+        'tiles.contracts': 'Contract Management',
+        'tiles.contractsDesc': 'Search and analyze supplier contracts',
+        'favorites.emptyTitle': 'No favorite sections',
+        'favorites.emptyDesc': 'Add sections to favorites by clicking the star on the home page',
+        'favorites.goHome': 'Go to Home',
+        'welcome.title': 'Welcome, Olena! 👋',
+        'welcome.subtitle': 'Choose a category to start working with the legal assistant',
+        'feedback.helpful': 'Helpful',
+        'feedback.notHelpful': 'Not helpful',
+        'feedback.thanks': 'Thank you!',
+        'results.found': 'Found',
+        'results.relevance': 'Relevance'
+    }
+};
+
+// Translate function
+function t(key) {
+    return translations[currentLang][key] || key;
+}
+
+// Apply translations
+function applyTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+            el.textContent = translations[currentLang][key];
+        }
+    });
+
+    // Update welcome section
+    const welcomeTitle = document.querySelector('.welcome-section h1');
+    const welcomeSubtitle = document.querySelector('.welcome-section p');
+    if (welcomeTitle) welcomeTitle.textContent = t('welcome.title');
+    if (welcomeSubtitle) welcomeSubtitle.textContent = t('welcome.subtitle');
+
+    // Update nav links
+    document.querySelector('[data-nav="home"] span').textContent = t('nav.home');
+    document.querySelector('[data-nav="history"] span').textContent = t('nav.history');
+    document.querySelector('[data-nav="favorites"] span').textContent = t('nav.favorites');
+}
 
 // Show screen function
 function showScreen(screenId) {
@@ -1172,8 +1264,8 @@ document.querySelectorAll('.nav-link').forEach(link => {
         } else if (nav === 'history') {
             showScreen('historyScreen');
         } else if (nav === 'favorites') {
-            // Show a simple message for now
-            showScreen('homeScreen');
+            renderFavorites();
+            showScreen('favoritesScreen');
         }
     });
 });
@@ -1315,8 +1407,38 @@ document.querySelectorAll('.theme-option').forEach(option => {
     option.addEventListener('click', () => {
         document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('active'));
         option.classList.add('active');
+
+        const theme = option.querySelector('input').value;
+        applyTheme(theme);
     });
 });
+
+// Apply theme function
+function applyTheme(theme) {
+    if (theme === 'dark') {
+        document.body.classList.add('dark-theme');
+    } else if (theme === 'light') {
+        document.body.classList.remove('dark-theme');
+    } else if (theme === 'auto') {
+        // Check system preference
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-theme');
+        } else {
+            document.body.classList.remove('dark-theme');
+        }
+    }
+    localStorage.setItem('theme', theme);
+}
+
+// Language select
+const langSelectEl = document.getElementById('langSelect');
+if (langSelectEl) {
+    langSelectEl.addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        localStorage.setItem('lang', currentLang);
+        applyTranslations();
+    });
+}
 
 // ==================== CLOSE DROPDOWNS ON OUTSIDE CLICK ====================
 document.addEventListener('click', (e) => {
@@ -1369,4 +1491,210 @@ document.querySelectorAll('.timeline-action').forEach(btn => {
             btn.style.color = '';
         }, 1500);
     });
+});
+
+// ==================== LOGO CLICK - GO HOME ====================
+document.getElementById('logoLink')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelector('.nav-link[data-nav="home"]').classList.add('active');
+    showScreen('homeScreen');
+});
+
+// ==================== FAVORITES FUNCTIONALITY ====================
+// Initialize favorites on page load
+function initFavorites() {
+    favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    document.querySelectorAll('.tile-favorite').forEach(btn => {
+        const tileId = btn.dataset.favorite;
+        if (favorites.includes(tileId)) {
+            btn.classList.add('active');
+            btn.querySelector('i').classList.remove('far');
+            btn.querySelector('i').classList.add('fas');
+        }
+    });
+}
+
+// Toggle favorite
+function toggleFavorite(tileId) {
+    const index = favorites.indexOf(tileId);
+    if (index > -1) {
+        favorites.splice(index, 1);
+    } else {
+        favorites.push(tileId);
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    return favorites.includes(tileId);
+}
+
+// Favorite buttons click
+document.querySelectorAll('.tile-favorite').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const tileId = btn.dataset.favorite;
+        const isNowFavorite = toggleFavorite(tileId);
+
+        if (isNowFavorite) {
+            btn.classList.add('active');
+            btn.querySelector('i').classList.remove('far');
+            btn.querySelector('i').classList.add('fas');
+        } else {
+            btn.classList.remove('active');
+            btn.querySelector('i').classList.remove('fas');
+            btn.querySelector('i').classList.add('far');
+        }
+    });
+});
+
+// Render favorites screen
+function renderFavorites() {
+    const favoritesGrid = document.getElementById('favoritesGrid');
+    const emptyState = document.getElementById('emptyFavorites');
+
+    favoritesGrid.innerHTML = '';
+
+    if (favorites.length === 0) {
+        favoritesGrid.style.display = 'none';
+        emptyState.style.display = 'block';
+    } else {
+        favoritesGrid.style.display = 'grid';
+        emptyState.style.display = 'none';
+
+        favorites.forEach(tileId => {
+            const config = tilesConfig[tileId];
+            if (!config) return;
+
+            const tile = document.createElement('div');
+            tile.className = 'tile';
+            tile.dataset.tile = tileId;
+
+            const icons = {
+                'legal-questions': 'fa-gavel',
+                'quick-search': 'fa-search',
+                'internal-docs': 'fa-folder-open',
+                'my-requests': 'fa-clipboard-list',
+                'compliance': 'fa-shield-alt',
+                'contracts': 'fa-file-contract'
+            };
+
+            tile.innerHTML = `
+                <button class="tile-favorite active" data-favorite="${tileId}" title="${currentLang === 'en' ? 'Remove from favorites' : 'Прибрати з обраного'}">
+                    <i class="fas fa-star"></i>
+                </button>
+                <div class="tile-icon">
+                    <i class="fas ${icons[tileId]}"></i>
+                </div>
+                <h3>${config.title}</h3>
+                <p>${currentLang === 'en' ? (translations.en['tiles.' + tileId.replace(/-/g, '') + 'Desc'] || '') : ''}</p>
+            `;
+
+            // Tile click
+            tile.addEventListener('click', (e) => {
+                if (!e.target.closest('.tile-favorite')) {
+                    openTile(tileId);
+                }
+            });
+
+            // Favorite button in favorites grid
+            tile.querySelector('.tile-favorite').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFavorite(tileId);
+                renderFavorites();
+            });
+
+            favoritesGrid.appendChild(tile);
+        });
+    }
+}
+
+// Go to home button
+document.getElementById('goToHomeBtn')?.addEventListener('click', () => {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelector('.nav-link[data-nav="home"]').classList.add('active');
+    showScreen('homeScreen');
+});
+
+// Update nav favorites handler
+const favoritesNavLink = document.querySelector('.nav-link[data-nav="favorites"]');
+if (favoritesNavLink) {
+    favoritesNavLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        favoritesNavLink.classList.add('active');
+        renderFavorites();
+        showScreen('favoritesScreen');
+    });
+}
+
+// ==================== CLICKABLE HISTORY ITEMS ====================
+document.querySelectorAll('.timeline-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const iconEl = item.querySelector('.timeline-icon');
+        const title = item.querySelector('h4').textContent;
+
+        if (iconEl.classList.contains('search')) {
+            // It's a search - go to the relevant tile
+            if (title.includes('мобілізованим') || title.includes('mobilized')) {
+                openTile('legal-questions');
+            } else if (title.includes('перепустки') || title.includes('pass')) {
+                openTile('quick-search');
+            } else if (title.includes('контракт') || title.includes('contract') || title.includes('постачає')) {
+                openTile('contracts');
+            }
+        } else if (iconEl.classList.contains('document')) {
+            openTile('internal-docs');
+        } else if (iconEl.classList.contains('compliance')) {
+            openTile('compliance');
+        } else if (iconEl.classList.contains('ticket')) {
+            openTile('my-requests');
+        } else if (iconEl.classList.contains('contract')) {
+            openTile('contracts');
+        }
+    });
+});
+
+// ==================== CLICKABLE NOTIFICATION ITEMS ====================
+document.querySelectorAll('.notification-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const text = item.querySelector('.notification-text').textContent;
+        notificationsDropdown.classList.remove('active');
+
+        if (text.includes('тікет') || text.includes('SD')) {
+            openTile('my-requests');
+        } else if (text.includes('документ') || text.includes('Внутрішні')) {
+            openTile('internal-docs');
+        } else if (text.includes('Контракт') || text.includes('КТ-')) {
+            openTile('contracts');
+        } else if (text.includes('комплаєнс') || text.includes('ТОВ')) {
+            openTile('compliance');
+        } else if (text.includes('шаблон') || text.includes('Бізнес')) {
+            openTile('internal-docs');
+        }
+    });
+});
+
+// ==================== INITIALIZE ON PAGE LOAD ====================
+document.addEventListener('DOMContentLoaded', () => {
+    // Load saved settings
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) {
+        currentLang = savedLang;
+        const langSelectInit = document.getElementById('langSelect');
+        if (langSelectInit) langSelectInit.value = currentLang;
+        applyTranslations();
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        applyTheme(savedTheme);
+        document.querySelectorAll('.theme-option').forEach(o => {
+            o.classList.remove('active');
+            if (o.querySelector('input').value === savedTheme) {
+                o.classList.add('active');
+                o.querySelector('input').checked = true;
+            }
+        });
+    }
+
+    initFavorites();
 });
