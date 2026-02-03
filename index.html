@@ -34,9 +34,66 @@
             </nav>
         </div>
         <div class="header-right">
-            <div class="notifications">
+            <div class="notifications" id="notificationsBtn">
                 <i class="fas fa-bell"></i>
                 <span class="badge">3</span>
+                <!-- Notifications Dropdown -->
+                <div class="notifications-dropdown" id="notificationsDropdown">
+                    <div class="dropdown-header">
+                        <h4>Сповіщення</h4>
+                        <a href="#" class="mark-all-read">Позначити всі як прочитані</a>
+                    </div>
+                    <div class="notifications-list">
+                        <div class="notification-item unread">
+                            <div class="notification-icon success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p class="notification-text">Ваш тікет <strong>SD895567</strong> оновлено</p>
+                                <span class="notification-time">5 хвилин тому</span>
+                            </div>
+                        </div>
+                        <div class="notification-item unread">
+                            <div class="notification-icon info">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p class="notification-text">Новий документ додано до <strong>Внутрішні документи</strong></p>
+                                <span class="notification-time">1 годину тому</span>
+                            </div>
+                        </div>
+                        <div class="notification-item unread">
+                            <div class="notification-icon warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p class="notification-text">Контракт <strong>КТ-2025-0905</strong> потребує вашої уваги</p>
+                                <span class="notification-time">3 години тому</span>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-icon success">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p class="notification-text">Перевірку комплаєнс для <strong>ТОВ "АГРО-ПРО"</strong> завершено</p>
+                                <span class="notification-time">Вчора, 18:45</span>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-icon info">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p class="notification-text">Оновлено шаблон <strong>Бізнес-вимог v2.2</strong></p>
+                                <span class="notification-time">Вчора, 14:20</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-footer">
+                        <a href="#" id="viewAllNotifications">Переглянути всі сповіщення</a>
+                    </div>
+                </div>
             </div>
             <div class="user-profile" id="userProfile">
                 <div class="avatar">
@@ -47,6 +104,46 @@
                     <span class="user-role">Юридичний відділ</span>
                 </div>
                 <i class="fas fa-chevron-down"></i>
+                <!-- Profile Dropdown -->
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="profile-dropdown-header">
+                        <div class="profile-avatar-large">
+                            <img src="https://ui-avatars.com/api/?name=Олена+Петренко&background=6366f1&color=fff&size=80" alt="User">
+                        </div>
+                        <div class="profile-details">
+                            <h4>Олена Петренко</h4>
+                            <p>olena.petrenko@company.ua</p>
+                            <span class="profile-badge"><i class="fas fa-shield-alt"></i> Юридичний відділ</span>
+                        </div>
+                    </div>
+                    <div class="profile-dropdown-menu">
+                        <a href="#" class="profile-menu-item" data-action="my-profile">
+                            <i class="fas fa-user"></i>
+                            <span>Мій профіль</span>
+                        </a>
+                        <a href="#" class="profile-menu-item" data-action="settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Налаштування</span>
+                        </a>
+                        <a href="#" class="profile-menu-item" data-action="my-activity">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Моя активність</span>
+                        </a>
+                        <a href="#" class="profile-menu-item" data-action="help">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Довідка</span>
+                        </a>
+                        <div class="profile-menu-divider"></div>
+                        <a href="#" class="profile-menu-item logout" data-action="logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Вийти з системи</span>
+                        </a>
+                    </div>
+                    <div class="profile-dropdown-footer">
+                        <span>Версія 2.1.0</span>
+                        <span>Останній вхід: сьогодні, 09:15</span>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -223,6 +320,420 @@
                     <span class="results-count"></span>
                 </div>
                 <div id="resultsContainer" class="results-container"></div>
+            </div>
+        </section>
+
+        <!-- History Screen -->
+        <section id="historyScreen" class="screen">
+            <div class="screen-header">
+                <h2><i class="fas fa-history"></i> Історія активності</h2>
+                <div class="history-filters">
+                    <select id="historyFilter" class="filter-select">
+                        <option value="all">Всі дії</option>
+                        <option value="search">Пошуки</option>
+                        <option value="documents">Документи</option>
+                        <option value="tickets">Звернення</option>
+                        <option value="compliance">Комплаєнс</option>
+                    </select>
+                    <select id="historyPeriod" class="filter-select">
+                        <option value="today">Сьогодні</option>
+                        <option value="week" selected>Цього тижня</option>
+                        <option value="month">Цього місяця</option>
+                        <option value="all">За весь час</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="history-timeline">
+                <div class="timeline-section">
+                    <div class="timeline-date">Сьогодні, 3 лютого 2026</div>
+                    <div class="timeline-items">
+                        <div class="timeline-item">
+                            <div class="timeline-icon search">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Пошук: "Виплата заробітної плати мобілізованим"</h4>
+                                <p>Загальноправові питання • Знайдено 4 результати</p>
+                                <span class="timeline-time">10:34</span>
+                            </div>
+                            <button class="timeline-action" title="Повторити пошук">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon document">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Переглянуто: Шаблон документа Бізнес-вимог (BRD)</h4>
+                                <p>Внутрішні документи • PDF документ</p>
+                                <span class="timeline-time">10:15</span>
+                            </div>
+                            <button class="timeline-action" title="Відкрити документ">
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon compliance">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Перевірка: ТОВ "ЧУДО НАСІННЯ" (ЄДРПОУ 12097606)</h4>
+                                <p>Оцінка ризиків / Комплаєнс • Статус: Перевірено ✓</p>
+                                <span class="timeline-time">09:48</span>
+                            </div>
+                            <button class="timeline-action" title="Переглянути результат">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon login">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Вхід у систему</h4>
+                                <p>IP: 192.168.1.*** • Chrome, Windows 11</p>
+                                <span class="timeline-time">09:15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-section">
+                    <div class="timeline-date">Вчора, 2 лютого 2026</div>
+                    <div class="timeline-items">
+                        <div class="timeline-item">
+                            <div class="timeline-icon ticket">
+                                <i class="fas fa-ticket-alt"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Створено звернення: Можливості придбання засобів РЕБ</h4>
+                                <p>Мої звернення • Тікет SD895567</p>
+                                <span class="timeline-time">16:45</span>
+                            </div>
+                            <button class="timeline-action" title="Відкрити тікет">
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon search">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Пошук: "Хто постачає засоби індивідуального захисту"</h4>
+                                <p>Робота з контрактами • Знайдено 3 результати</p>
+                                <span class="timeline-time">15:22</span>
+                            </div>
+                            <button class="timeline-action" title="Повторити пошук">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon contract">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Переглянуто: Контракт №КТ-2024-0412 (ТОВ "СФЕРА-М")</h4>
+                                <p>Робота з контрактами • Сума: 2 500 000 грн</p>
+                                <span class="timeline-time">15:18</span>
+                            </div>
+                            <button class="timeline-action" title="Відкрити контракт">
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon document">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Переглянуто: Процедура відновлення перепустки</h4>
+                                <p>Швидкий пошук рішень • SharePoint</p>
+                                <span class="timeline-time">11:05</span>
+                            </div>
+                            <button class="timeline-action" title="Відкрити документ">
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-section">
+                    <div class="timeline-date">31 січня 2026</div>
+                    <div class="timeline-items">
+                        <div class="timeline-item">
+                            <div class="timeline-icon compliance">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Перевірка: ТОВ "АГРО-ПРО" (ЄДРПОУ 34567890)</h4>
+                                <p>Оцінка ризиків / Комплаєнс • Статус: Перевірено ✓</p>
+                                <span class="timeline-time">14:30</span>
+                            </div>
+                            <button class="timeline-action" title="Переглянути результат">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon search">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Пошук: "Що робити у випадку втрати перепустки"</h4>
+                                <p>Швидкий пошук рішень • Знайдено 4 результати</p>
+                                <span class="timeline-time">10:12</span>
+                            </div>
+                            <button class="timeline-action" title="Повторити пошук">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="history-stats">
+                <div class="history-stat-card">
+                    <i class="fas fa-search"></i>
+                    <div class="history-stat-info">
+                        <span class="history-stat-value">47</span>
+                        <span class="history-stat-label">Пошуків цього місяця</span>
+                    </div>
+                </div>
+                <div class="history-stat-card">
+                    <i class="fas fa-file-alt"></i>
+                    <div class="history-stat-info">
+                        <span class="history-stat-value">23</span>
+                        <span class="history-stat-label">Переглянутих документів</span>
+                    </div>
+                </div>
+                <div class="history-stat-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="history-stat-info">
+                        <span class="history-stat-value">8</span>
+                        <span class="history-stat-label">Перевірок комплаєнс</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Screen -->
+        <section id="profileScreen" class="screen">
+            <div class="profile-page">
+                <div class="profile-sidebar">
+                    <div class="profile-card">
+                        <div class="profile-card-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Олена+Петренко&background=6366f1&color=fff&size=120" alt="User">
+                            <button class="change-avatar-btn"><i class="fas fa-camera"></i></button>
+                        </div>
+                        <h3>Олена Петренко</h3>
+                        <p class="profile-card-role">Старший юрисконсульт</p>
+                        <p class="profile-card-dept"><i class="fas fa-building"></i> Юридичний відділ</p>
+                        <div class="profile-card-stats">
+                            <div class="profile-stat">
+                                <span class="profile-stat-value">156</span>
+                                <span class="profile-stat-label">Запитів</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="profile-stat-value">89</span>
+                                <span class="profile-stat-label">Документів</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="profile-stat-value">34</span>
+                                <span class="profile-stat-label">Перевірок</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-nav">
+                        <a href="#" class="profile-nav-item active" data-section="personal">
+                            <i class="fas fa-user"></i> Особисті дані
+                        </a>
+                        <a href="#" class="profile-nav-item" data-section="security">
+                            <i class="fas fa-lock"></i> Безпека
+                        </a>
+                        <a href="#" class="profile-nav-item" data-section="notifications-settings">
+                            <i class="fas fa-bell"></i> Сповіщення
+                        </a>
+                        <a href="#" class="profile-nav-item" data-section="preferences">
+                            <i class="fas fa-sliders-h"></i> Налаштування
+                        </a>
+                    </div>
+                </div>
+
+                <div class="profile-main">
+                    <div class="profile-section" id="personalSection">
+                        <div class="section-header">
+                            <h2>Особисті дані</h2>
+                            <button class="edit-section-btn"><i class="fas fa-edit"></i> Редагувати</button>
+                        </div>
+                        <div class="profile-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Прізвище</label>
+                                    <input type="text" value="Петренко" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ім'я</label>
+                                    <input type="text" value="Олена" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>По батькові</label>
+                                    <input type="text" value="Ігорівна" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" value="olena.petrenko@company.ua" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Телефон</label>
+                                    <input type="tel" value="+380 67 123 45 67" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Посада</label>
+                                    <input type="text" value="Старший юрисконсульт" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Підрозділ</label>
+                                    <input type="text" value="Юридичний відділ" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Табельний номер</label>
+                                    <input type="text" value="EMP-2019-0456" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Дата прийому</label>
+                                    <input type="text" value="15 березня 2019" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section" id="securitySection" style="display: none;">
+                        <div class="section-header">
+                            <h2>Безпека</h2>
+                        </div>
+                        <div class="security-options">
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4><i class="fas fa-key"></i> Пароль</h4>
+                                    <p>Останнє оновлення: 15 грудня 2025</p>
+                                </div>
+                                <button class="btn-secondary">Змінити пароль</button>
+                            </div>
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4><i class="fas fa-mobile-alt"></i> Двофакторна автентифікація</h4>
+                                    <p>Статус: <span class="status-active">Увімкнено</span></p>
+                                </div>
+                                <button class="btn-secondary">Налаштувати</button>
+                            </div>
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4><i class="fas fa-history"></i> Активні сеанси</h4>
+                                    <p>2 активних пристрої</p>
+                                </div>
+                                <button class="btn-secondary">Переглянути</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section" id="notificationsSettingsSection" style="display: none;">
+                        <div class="section-header">
+                            <h2>Налаштування сповіщень</h2>
+                        </div>
+                        <div class="notifications-options">
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <h4>Email-сповіщення</h4>
+                                    <p>Отримувати сповіщення на пошту</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <h4>Оновлення тікетів</h4>
+                                    <p>Сповіщати про зміни статусу звернень</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <h4>Нові документи</h4>
+                                    <p>Сповіщати про нові документи у підрозділі</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="notification-option">
+                                <div class="option-info">
+                                    <h4>Результати комплаєнс</h4>
+                                    <p>Сповіщати про завершення перевірок</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section" id="preferencesSection" style="display: none;">
+                        <div class="section-header">
+                            <h2>Налаштування</h2>
+                        </div>
+                        <div class="preferences-options">
+                            <div class="preference-group">
+                                <h4>Мова інтерфейсу</h4>
+                                <select class="preference-select">
+                                    <option value="uk" selected>Українська</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                            <div class="preference-group">
+                                <h4>Тема оформлення</h4>
+                                <div class="theme-options">
+                                    <label class="theme-option active">
+                                        <input type="radio" name="theme" value="light" checked>
+                                        <span class="theme-preview light"></span>
+                                        <span>Світла</span>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="dark">
+                                        <span class="theme-preview dark"></span>
+                                        <span>Темна</span>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="auto">
+                                        <span class="theme-preview auto"></span>
+                                        <span>Авто</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="preference-group">
+                                <h4>Результатів на сторінці</h4>
+                                <select class="preference-select">
+                                    <option value="10">10</option>
+                                    <option value="20" selected>20</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 

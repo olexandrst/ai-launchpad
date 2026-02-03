@@ -1130,8 +1130,207 @@ document.querySelectorAll('.nav-link').forEach(link => {
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
         link.classList.add('active');
 
-        if (link.dataset.nav === 'home') {
+        const nav = link.dataset.nav;
+        if (nav === 'home') {
+            showScreen('homeScreen');
+        } else if (nav === 'history') {
+            showScreen('historyScreen');
+        } else if (nav === 'favorites') {
+            // Show a simple message for now
             showScreen('homeScreen');
         }
+    });
+});
+
+// ==================== NOTIFICATIONS DROPDOWN ====================
+const notificationsBtn = document.getElementById('notificationsBtn');
+const notificationsDropdown = document.getElementById('notificationsDropdown');
+
+notificationsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    notificationsDropdown.classList.toggle('active');
+    // Close profile dropdown if open
+    profileDropdown.classList.remove('active');
+});
+
+// Mark all as read
+document.querySelector('.mark-all-read')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('.notification-item.unread').forEach(item => {
+        item.classList.remove('unread');
+    });
+    const badge = document.querySelector('.notifications .badge');
+    if (badge) badge.textContent = '0';
+});
+
+// Notification item click
+document.querySelectorAll('.notification-item').forEach(item => {
+    item.addEventListener('click', () => {
+        item.classList.remove('unread');
+        // Update badge count
+        const unreadCount = document.querySelectorAll('.notification-item.unread').length;
+        const badge = document.querySelector('.notifications .badge');
+        if (badge) badge.textContent = unreadCount;
+    });
+});
+
+// View all notifications link
+document.getElementById('viewAllNotifications')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    notificationsDropdown.classList.remove('active');
+    // Navigate to history with notifications filter
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelector('.nav-link[data-nav="history"]').classList.add('active');
+    showScreen('historyScreen');
+});
+
+// ==================== PROFILE DROPDOWN ====================
+const userProfile = document.getElementById('userProfile');
+const profileDropdown = document.getElementById('profileDropdown');
+
+userProfile.addEventListener('click', (e) => {
+    e.stopPropagation();
+    profileDropdown.classList.toggle('active');
+    // Close notifications dropdown if open
+    notificationsDropdown.classList.remove('active');
+});
+
+// Profile menu items
+document.querySelectorAll('.profile-menu-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const action = item.dataset.action;
+        profileDropdown.classList.remove('active');
+
+        switch(action) {
+            case 'my-profile':
+            case 'settings':
+                // Clear nav active state
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                showScreen('profileScreen');
+                // Activate the correct section based on action
+                if (action === 'settings') {
+                    activateProfileSection('preferences');
+                } else {
+                    activateProfileSection('personal');
+                }
+                break;
+            case 'my-activity':
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelector('.nav-link[data-nav="history"]').classList.add('active');
+                showScreen('historyScreen');
+                break;
+            case 'help':
+                // Open chat widget
+                chatWindow.classList.add('active');
+                break;
+            case 'logout':
+                // Simulate logout
+                if (confirm('Ви впевнені, що хочете вийти з системи?')) {
+                    showLoading();
+                    setTimeout(() => {
+                        hideLoading();
+                        alert('Ви вийшли з системи. Дякуємо за використання Legal AI Assistant!');
+                        location.reload();
+                    }, 1000);
+                }
+                break;
+        }
+    });
+});
+
+// ==================== PROFILE PAGE NAVIGATION ====================
+function activateProfileSection(sectionId) {
+    // Update nav
+    document.querySelectorAll('.profile-nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.section === sectionId) {
+            item.classList.add('active');
+        }
+    });
+
+    // Show section
+    const sectionMap = {
+        'personal': 'personalSection',
+        'security': 'securitySection',
+        'notifications-settings': 'notificationsSettingsSection',
+        'preferences': 'preferencesSection'
+    };
+
+    Object.values(sectionMap).forEach(id => {
+        const section = document.getElementById(id);
+        if (section) section.style.display = 'none';
+    });
+
+    const targetSection = document.getElementById(sectionMap[sectionId]);
+    if (targetSection) targetSection.style.display = 'block';
+}
+
+// Profile nav items
+document.querySelectorAll('.profile-nav-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        activateProfileSection(item.dataset.section);
+    });
+});
+
+// Theme options
+document.querySelectorAll('.theme-option').forEach(option => {
+    option.addEventListener('click', () => {
+        document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('active'));
+        option.classList.add('active');
+    });
+});
+
+// ==================== CLOSE DROPDOWNS ON OUTSIDE CLICK ====================
+document.addEventListener('click', (e) => {
+    // Close notifications dropdown
+    if (!notificationsBtn.contains(e.target)) {
+        notificationsDropdown.classList.remove('active');
+    }
+    // Close profile dropdown
+    if (!userProfile.contains(e.target)) {
+        profileDropdown.classList.remove('active');
+    }
+});
+
+// ==================== HISTORY FILTERS ====================
+const historyFilter = document.getElementById('historyFilter');
+const historyPeriod = document.getElementById('historyPeriod');
+
+historyFilter?.addEventListener('change', () => {
+    // Simulate filter change
+    showLoading();
+    setTimeout(() => {
+        hideLoading();
+    }, 500);
+});
+
+historyPeriod?.addEventListener('change', () => {
+    // Simulate period change
+    showLoading();
+    setTimeout(() => {
+        hideLoading();
+    }, 500);
+});
+
+// Timeline action buttons
+document.querySelectorAll('.timeline-action').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Show a tooltip or perform action
+        const item = btn.closest('.timeline-item');
+        const title = item.querySelector('.timeline-content h4').textContent;
+
+        // Simple feedback
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        btn.style.background = 'var(--success)';
+        btn.style.color = 'var(--white)';
+
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-redo"></i>';
+            btn.style.background = '';
+            btn.style.color = '';
+        }, 1500);
     });
 });
