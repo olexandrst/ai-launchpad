@@ -388,6 +388,9 @@ body {
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Search Section */
@@ -3962,7 +3965,8 @@ body.dark-theme .sidebar-card .status-select {
 
 .ticket-priority {
     width: 5px;
-    height: 60px;
+    min-height: 60px;
+    align-self: stretch;
     border-radius: 3px;
     flex-shrink: 0;
 }
@@ -4033,6 +4037,58 @@ body.dark-theme .sidebar-card .status-select {
 .ticket-list-item:hover .ticket-arrow {
     color: var(--primary);
     transform: translateX(5px);
+}
+
+/* Resolution info for resolved tickets */
+.ticket-resolution {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.04) 100%);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 8px;
+    border-left: 3px solid var(--success);
+}
+
+.ticket-resolution-header {
+    font-size: 0.8rem;
+    color: var(--success);
+    margin-bottom: 0.35rem;
+}
+
+.ticket-resolution-header i {
+    margin-right: 0.25rem;
+}
+
+.ticket-resolution-text {
+    font-size: 0.85rem;
+    color: var(--dark-light);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.ticket-resolution-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: var(--gray);
+}
+
+.ticket-resolution-meta i {
+    margin-right: 0.25rem;
+    color: var(--success);
+}
+
+.dark-theme .ticket-resolution {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(22, 163, 74, 0.06) 100%);
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.dark-theme .ticket-resolution-text {
+    color: #cbd5e1;
+}
+
+.dark-theme .ticket-resolution-meta {
+    color: #94a3b8;
 }
 
 .ticket-status-badge {

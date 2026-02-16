@@ -7,8 +7,8 @@ const mainTilesConfig = {
         icon: 'fas fa-users',
         subTiles: [
             { id: 'ai-agent', title: 'Поставити питання ШІ агенту', icon: 'fas fa-robot', desc: 'Отримайте відповідь від ШІ-асистента на юридичні питання', screen: 'aiAgentScreen' },
-            { id: 'internal-docs', title: 'Запит по внутрішнім документам', icon: 'fas fa-folder-open', desc: 'Пошук та робота з документами підрозділу', screen: 'internalDocsScreen' },
-            { id: 'knowledge-base', title: 'База юридичних знань', icon: 'fas fa-book', desc: 'FAQ та довідкові матеріали з юридичних питань', screen: 'knowledgeBaseScreen' }
+            { id: 'internal-docs', title: 'Пошук по внутрішніх документах', icon: 'fas fa-folder-open', desc: 'База локальних регламентуючих документів', screen: 'internalDocsScreen' },
+            { id: 'knowledge-base', title: 'Пошук по базі юридичних знань', icon: 'fas fa-book', desc: 'FAQ та довідкові матеріали з юридичних питань', screen: 'knowledgeBaseScreen' }
         ]
     },
     'lawyer-cabinet': {
@@ -21,7 +21,7 @@ const mainTilesConfig = {
         ]
     },
     'other-departments': {
-        title: 'Інші підрозділи',
+        title: 'Кабінети інших підрозділів',
         icon: 'fas fa-building',
         subTiles: [
             { id: 'hr-dashboard', title: 'HR та рекрутинг', icon: 'fas fa-users', desc: 'Дашборд з інформацією про персонал', screen: 'hrDashboardScreen' },
@@ -564,8 +564,8 @@ const ticketsData = [
     { id: 'TK-2026-0089', title: 'Консультація щодо звільнення працівника', from: 'Іван Коваленко', department: 'HR', status: 'in-progress', priority: 'urgent', date: '02.02.2026 14:20', category: 'labor' },
     { id: 'TK-2026-0088', title: 'Судовий позов від колишнього працівника', from: 'Наталія Петренко', department: 'HR', status: 'in-progress', priority: 'urgent', date: '02.02.2026 11:00', category: 'court' },
     { id: 'TK-2026-0087', title: 'Питання про виплату лікарняних', from: 'Сергій Мельник', department: 'Виробництво', status: 'waiting', priority: 'medium', date: '01.02.2026 15:30', category: 'labor' },
-    { id: 'TK-2026-0086', title: 'Реєстрація змін до статуту', from: 'Директор', department: 'Керівництво', status: 'resolved', priority: 'high', date: '01.02.2026 10:00', category: 'corporate' },
-    { id: 'TK-2026-0085', title: 'Перевірка ліцензії постачальника', from: 'Андрій Шевченко', department: 'Закупівлі', status: 'resolved', priority: 'low', date: '31.01.2026 14:15', category: 'compliance' }
+    { id: 'TK-2026-0086', title: 'Реєстрація змін до статуту', from: 'Директор', department: 'Керівництво', status: 'resolved', priority: 'high', date: '01.02.2026 10:00', category: 'corporate', resolvedDate: '02.02.2026 16:30', resolvedBy: 'Олена Петренко', resolution: 'Зміни до статуту підготовлено та подано до державного реєстратора. Реєстрацію завершено, витяг з ЄДР отримано.' },
+    { id: 'TK-2026-0085', title: 'Перевірка ліцензії постачальника', from: 'Андрій Шевченко', department: 'Закупівлі', status: 'resolved', priority: 'low', date: '31.01.2026 14:15', category: 'compliance', resolvedDate: '01.02.2026 11:45', resolvedBy: 'Олена Петренко', resolution: 'Ліцензію постачальника ТОВ "СФЕРА-М" перевірено. Ліцензія дійсна до 31.12.2026. Зауважень не виявлено, контрагент допущений до участі у тендері.' }
 ];
 
 // Dispatcher categories
@@ -879,6 +879,18 @@ function renderTickets(filter = 'all') {
     filtered.forEach(ticket => {
         const item = document.createElement('div');
         item.className = 'ticket-list-item';
+        const resolutionHtml = ticket.status === 'resolved' && ticket.resolution ? `
+            <div class="ticket-resolution">
+                <div class="ticket-resolution-header">
+                    <i class="fas fa-check-circle"></i> <strong>Результат:</strong>
+                </div>
+                <p class="ticket-resolution-text">${ticket.resolution}</p>
+                <div class="ticket-resolution-meta">
+                    <span><i class="fas fa-user-check"></i> ${ticket.resolvedBy}</span>
+                    <span><i class="fas fa-calendar-check"></i> ${ticket.resolvedDate}</span>
+                </div>
+            </div>
+        ` : '';
         item.innerHTML = `
             <div class="ticket-priority ${ticket.priority}"></div>
             <div class="ticket-main">
@@ -892,6 +904,7 @@ function renderTickets(filter = 'all') {
                     <span><i class="fas fa-building"></i> ${ticket.department}</span>
                     <span><i class="fas fa-clock"></i> ${ticket.date}</span>
                 </div>
+                ${resolutionHtml}
             </div>
             <div class="ticket-arrow">
                 <i class="fas fa-chevron-right"></i>
