@@ -29,15 +29,15 @@
     --gradient-graphite: linear-gradient(135deg, #3a3f47 0%, #1a1d22 100%);
 
     /* Glassmorphism tokens */
-    --glass-bg: rgba(255, 255, 255, 0.55);
-    --glass-bg-strong: rgba(255, 255, 255, 0.72);
-    --glass-bg-soft: rgba(255, 255, 255, 0.40);
-    --glass-bg-tint: rgba(255, 255, 255, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.65);
-    --glass-border-soft: rgba(16, 18, 22, 0.06);
-    --glass-blur: blur(18px) saturate(150%);
-    --glass-blur-strong: blur(26px) saturate(160%);
-    --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    --glass-bg: rgba(255, 255, 255, 0.82);
+    --glass-bg-strong: rgba(255, 255, 255, 0.92);
+    --glass-bg-soft: rgba(255, 255, 255, 0.65);
+    --glass-bg-tint: rgba(255, 255, 255, 0.88);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-border-soft: rgba(16, 18, 22, 0.07);
+    --glass-blur: blur(16px) saturate(125%);
+    --glass-blur-strong: blur(22px) saturate(135%);
+    --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 
     /* Soft, layered shadows */
     --shadow-sm: 0 1px 2px rgba(16, 18, 22, 0.04), 0 2px 8px rgba(16, 18, 22, 0.05);
@@ -56,10 +56,9 @@
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background:
-        radial-gradient(1100px 620px at 8% -8%, rgba(227, 30, 36, 0.10), transparent 60%),
-        radial-gradient(1000px 720px at 102% 2%, rgba(18, 19, 22, 0.10), transparent 55%),
-        radial-gradient(900px 640px at 50% 120%, rgba(227, 30, 36, 0.06), transparent 60%),
-        linear-gradient(180deg, #f4f5f7 0%, #e9ebef 100%);
+        radial-gradient(1100px 620px at 8% -8%, rgba(227, 30, 36, 0.045), transparent 60%),
+        radial-gradient(1000px 720px at 102% 2%, rgba(18, 19, 22, 0.04), transparent 55%),
+        linear-gradient(180deg, #f5f6f8 0%, #eceef1 100%);
     background-attachment: fixed;
     min-height: 100vh;
     color: var(--dark);
@@ -4968,10 +4967,9 @@ body::before {
     z-index: -1;
     pointer-events: none;
     background:
-        radial-gradient(420px 420px at 16% 18%, rgba(227, 30, 36, 0.14), transparent 70%),
-        radial-gradient(520px 520px at 86% 28%, rgba(18, 19, 22, 0.10), transparent 70%),
-        radial-gradient(480px 480px at 70% 90%, rgba(227, 30, 36, 0.08), transparent 72%);
-    filter: blur(10px);
+        radial-gradient(460px 460px at 14% 16%, rgba(227, 30, 36, 0.06), transparent 70%),
+        radial-gradient(560px 560px at 88% 24%, rgba(18, 19, 22, 0.045), transparent 72%);
+    filter: blur(12px);
 }
 
 /* ---------- Floating glass header ---------- */
@@ -5423,4 +5421,360 @@ body.dark-theme .action-btn { background: rgba(255, 255, 255, 0.06); color: var(
         height: 60px;
         top: 10px;
     }
+}
+
+/* ============================================================
+   FEEDBACK ADJUSTMENTS
+   - shared Metinvest Digital suite header + app sub-bar
+   - calmer / more opaque surfaces
+   - compact ticket list, polished ticket detail
+   - dispatcher contrast fixes, opaque notifications
+   ============================================================ */
+
+/* ---------- Top bar stack: suite header + app bar ---------- */
+.topbar-stack {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    padding: 14px 22px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Shared suite header — matches the Metinvest Digital demo site */
+.suite-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 62px;
+    padding: 0 1.4rem;
+    background: rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: var(--glass-blur-strong);
+    backdrop-filter: var(--glass-blur-strong);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg), var(--glass-inset);
+}
+
+.suite-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+}
+
+.suite-logo-mark {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1.05rem;
+    background:
+        radial-gradient(circle at 32% 28%, rgba(227, 30, 36, 0.95), rgba(227, 30, 36, 0) 58%),
+        var(--gradient-secondary);
+    box-shadow:
+        0 8px 18px -8px rgba(16, 18, 22, 0.6),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 0 18px -4px rgba(227, 30, 36, 0.55);
+}
+
+.suite-logo-text { display: flex; flex-direction: column; line-height: 1.05; }
+.suite-logo-text strong { font-size: 1.05rem; font-weight: 800; color: var(--dark); letter-spacing: -0.01em; }
+.suite-logo-text small { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; color: var(--gray); text-transform: uppercase; }
+
+.suite-nav { display: flex; align-items: center; gap: 0.4rem; }
+
+.suite-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.15rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--gray);
+    transition: var(--transition);
+}
+
+.suite-nav-link i { font-size: 0.95rem; }
+.suite-nav-link:hover { background: rgba(16, 18, 22, 0.05); color: var(--dark); }
+.suite-nav-link.active { background: var(--gradient-primary); color: #fff; box-shadow: var(--shadow-red-sm); }
+.suite-nav-link.active i { color: #fff; }
+
+.suite-lang { display: flex; align-items: center; gap: 0.3rem; }
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--glass-border-soft);
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--gray);
+    cursor: pointer;
+    transition: var(--transition);
+}
+.lang-btn .lang-flag { font-size: 0.95rem; line-height: 1; }
+.lang-btn:hover { color: var(--dark); border-color: rgba(227, 30, 36, 0.3); }
+.lang-btn.active { background: var(--gradient-primary); border-color: transparent; color: #fff; box-shadow: var(--shadow-red-sm); }
+
+/* App sub-bar — the app's own controls, sitting under the suite header */
+.header {
+    position: static;
+    top: auto;
+    margin: 0;
+    height: 56px;
+    padding: 0 1.1rem;
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    z-index: auto;
+}
+
+.header .header-left .logo i {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-red-sm), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.header .header-left .logo span { font-size: 1.05rem; }
+
+/* ---------- My Tickets: opaque stat cards ---------- */
+.ticket-stat-card {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1px solid var(--glass-border-soft);
+    box-shadow: var(--shadow);
+}
+
+/* ---------- My Tickets: compact, flat list ---------- */
+.tickets-list-container {
+    background: var(--white);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1px solid var(--glass-border-soft);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.ticket-list-item {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: none;
+    border-bottom: 1px solid var(--light);
+    border-radius: 0;
+    gap: 1rem;
+    padding: 0.95rem 1.4rem;
+    align-items: center;
+}
+
+.ticket-list-item:hover {
+    transform: none;
+    box-shadow: none;
+    background: rgba(227, 30, 36, 0.04);
+    padding-left: 1.7rem;
+}
+
+.ticket-list-item .ticket-priority { min-height: 42px; width: 4px; }
+.ticket-list-item .ticket-main .ticket-header { margin-bottom: 0.2rem; }
+.ticket-list-item .ticket-main .ticket-title { font-size: 0.98rem; margin-bottom: 0.3rem; }
+.ticket-list-item .ticket-main .ticket-meta { gap: 0.9rem; font-size: 0.78rem; }
+.ticket-list-item .ticket-arrow { color: var(--gray-light); }
+.ticket-list-item:hover .ticket-arrow { color: var(--primary); }
+
+/* ---------- Ticket detail: polished layout ---------- */
+.ticket-detail-container { gap: 1.5rem; align-items: start; }
+
+.ticket-detail-main {
+    background: var(--white);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1px solid var(--glass-border-soft);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.ticket-detail-header { padding: 1.6rem 1.8rem 1.4rem; border-bottom: 1px solid var(--light); }
+.ticket-detail-id { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.7rem; }
+.ticket-detail-id .ticket-id { font-size: 0.85rem; font-weight: 700; color: var(--gray); letter-spacing: 0.02em; }
+.ticket-detail-header h2 { font-size: 1.45rem; font-weight: 800; color: var(--dark); line-height: 1.25; }
+
+.ticket-detail-body { padding: 1.6rem 1.8rem; }
+
+.ticket-message { display: flex; flex-direction: column; gap: 0.9rem; }
+.ticket-message .message-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.ticket-message .message-author { display: flex; align-items: center; gap: 0.75rem; }
+.ticket-message .author-avatar img { width: 44px; height: 44px; border-radius: 50%; box-shadow: var(--shadow-sm); }
+.ticket-message .author-info { display: flex; flex-direction: column; line-height: 1.2; }
+.ticket-message .author-name { font-weight: 700; color: var(--dark); font-size: 0.95rem; }
+.ticket-message .author-dept { font-size: 0.8rem; color: var(--gray); }
+.ticket-message .message-date { font-size: 0.8rem; color: var(--gray-light); white-space: nowrap; }
+
+.ticket-message .message-content {
+    background: var(--light);
+    border: 1px solid var(--glass-border-soft);
+    border-radius: 14px;
+    padding: 1.1rem 1.25rem;
+    color: var(--dark-light);
+    line-height: 1.65;
+}
+.ticket-message .message-content p { margin-bottom: 0.6rem; color: var(--dark-light); }
+.ticket-message .message-content p:last-child { margin-bottom: 0; }
+
+.ticket-reply-section { border-top: 1px solid var(--light); padding: 1.4rem 1.8rem 1.6rem; }
+.ticket-reply-section h4 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.85rem; }
+.ticket-reply-section textarea,
+#ticketReplyInput {
+    width: 100%;
+    min-height: 110px;
+    padding: 0.9rem 1rem;
+    background: var(--white);
+    border: 1px solid var(--glass-border-soft);
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--dark);
+    resize: vertical;
+    margin-bottom: 0.9rem;
+}
+.ticket-reply-section .reply-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
+
+/* Sidebar as a clean stack of solid cards */
+.ticket-detail-sidebar {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.ticket-detail-sidebar .sidebar-section {
+    background: var(--white);
+    border: 1px solid var(--glass-border-soft);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.4rem;
+    box-shadow: var(--shadow);
+}
+
+.sidebar-section h4 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray);
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--light);
+}
+
+.ticket-detail-sidebar .sidebar-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--light);
+}
+.ticket-detail-sidebar .sidebar-item:last-child { border-bottom: none; padding-bottom: 0; }
+.sidebar-label { font-size: 0.85rem; color: var(--gray); }
+.sidebar-value { font-size: 0.85rem; font-weight: 700; color: var(--dark); text-align: right; }
+
+.ai-analysis { display: flex; flex-direction: column; gap: 0.7rem; }
+.ai-analysis p {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--dark-light);
+    margin: 0;
+}
+.ai-analysis p i { color: var(--primary); margin-top: 0.15rem; flex-shrink: 0; }
+
+/* ---------- Dispatcher: light banner, readable, no black ---------- */
+.ai-classification-banner {
+    background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border-soft);
+    box-shadow: var(--shadow);
+}
+.ai-classification-banner .ai-banner-content h4 { color: var(--dark); }
+.ai-classification-banner .ai-banner-content p { color: var(--gray); }
+.ai-classification-banner .ai-banner-stats span {
+    background: var(--white);
+    color: var(--dark);
+    border: 1px solid var(--glass-border-soft);
+}
+.ai-classification-banner .ai-banner-stats span i { color: var(--primary); }
+
+.dispatcher-category-card {
+    background: var(--white);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1px solid var(--glass-border-soft);
+    box-shadow: var(--shadow);
+}
+.category-icon { box-shadow: 0 8px 18px -10px rgba(16, 18, 22, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18); }
+
+/* "Класифіковано ШІ" badge — readable red tint */
+.ticket-status-badge.new {
+    background: rgba(16, 18, 22, 0.06);
+    color: #3a3f47;
+    border: 1px solid rgba(16, 18, 22, 0.12);
+}
+
+/* ---------- Notifications: fully opaque tray ---------- */
+.notifications-dropdown {
+    background: var(--white);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1px solid var(--glass-border-soft);
+    box-shadow: var(--shadow-xl);
+}
+.notification-item { transition: var(--transition); }
+.notification-item:hover { background: rgba(227, 30, 36, 0.05); }
+
+/* ---------- Dark theme additions for the new bars ---------- */
+body.dark-theme .suite-header { background: rgba(26, 29, 34, 0.94); border-color: var(--glass-border); }
+body.dark-theme .header { background: rgba(26, 29, 34, 0.8); border-color: var(--glass-border); }
+body.dark-theme .suite-logo-text strong { color: var(--dark); }
+body.dark-theme .lang-btn { background: rgba(255, 255, 255, 0.06); }
+body.dark-theme .suite-nav-link:hover { background: rgba(255, 255, 255, 0.08); }
+body.dark-theme .ticket-stat-card,
+body.dark-theme .tickets-list-container,
+body.dark-theme .ticket-detail-main,
+body.dark-theme .ticket-detail-sidebar .sidebar-section,
+body.dark-theme .dispatcher-category-card,
+body.dark-theme .notifications-dropdown { background: var(--white); }
+body.dark-theme .ticket-message .message-content,
+body.dark-theme .ticket-reply-section textarea { background: rgba(255, 255, 255, 0.05); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .topbar-stack { padding: 10px 12px 0; gap: 6px; }
+    .suite-header { height: 56px; padding: 0 0.9rem; }
+    .suite-logo-text small { display: none; }
+    .suite-nav-link span { display: none; }
+    .suite-nav-link { padding: 0.5rem 0.7rem; }
+    .header { height: 52px; padding: 0 0.7rem; }
+    .ticket-detail-container { grid-template-columns: 1fr; }
 }
