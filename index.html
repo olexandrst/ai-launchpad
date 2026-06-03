@@ -9,8 +9,35 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
+    <!-- Top bar: shared Metinvest Digital demo suite header + app sub-bar -->
+    <div class="topbar-stack">
+        <header class="suite-header">
+            <a class="suite-logo" href="https://olexandrst.github.io/demosite/" title="До набору демо-рішень Metinvest Digital">
+                <span class="suite-logo-mark"><i class="fas fa-cube"></i></span>
+                <span class="suite-logo-text">
+                    <strong>Metinvest Digital</strong>
+                    <small>Демо рішень</small>
+                </span>
+            </a>
+            <nav class="suite-nav">
+                <a class="suite-nav-link active" href="https://olexandrst.github.io/demosite/">
+                    <i class="fas fa-broadcast-tower"></i><span>Наживо</span>
+                </a>
+                <a class="suite-nav-link" href="https://olexandrst.github.io/demosite/">
+                    <i class="fas fa-desktop"></i><span>Слайди</span>
+                </a>
+                <a class="suite-nav-link" href="https://olexandrst.github.io/demosite/">
+                    <i class="fas fa-clock"></i><span>Про Нас</span>
+                </a>
+            </nav>
+            <div class="suite-lang">
+                <button class="lang-btn active" data-lang="ua"><span class="lang-flag">🇺🇦</span> UA</button>
+                <button class="lang-btn" data-lang="en"><span class="lang-flag">🇬🇧</span> EN</button>
+            </div>
+        </header>
+
+        <!-- App-specific controls (organically placed under the shared header) -->
+        <header class="header">
         <div class="header-left">
             <a href="#" class="logo" id="logoLink">
                 <i class="fas fa-balance-scale"></i>
@@ -44,7 +71,7 @@
                         <a href="#" class="mark-all-read">Позначити всі як прочитані</a>
                     </div>
                     <div class="notifications-list">
-                        <div class="notification-item unread">
+                        <div class="notification-item unread" data-route="ticket" data-ticket="TK-2026-0089">
                             <div class="notification-icon success">
                                 <i class="fas fa-check-circle"></i>
                             </div>
@@ -53,7 +80,7 @@
                                 <span class="notification-time">10 хвилин тому</span>
                             </div>
                         </div>
-                        <div class="notification-item unread">
+                        <div class="notification-item unread" data-route="dispatcher">
                             <div class="notification-icon info">
                                 <i class="fas fa-robot"></i>
                             </div>
@@ -62,7 +89,7 @@
                                 <span class="notification-time">25 хвилин тому</span>
                             </div>
                         </div>
-                        <div class="notification-item unread">
+                        <div class="notification-item unread" data-route="ticket" data-ticket="TK-2026-0089">
                             <div class="notification-icon warning">
                                 <i class="fas fa-exclamation-triangle"></i>
                             </div>
@@ -71,7 +98,7 @@
                                 <span class="notification-time">1 годину тому</span>
                             </div>
                         </div>
-                        <div class="notification-item">
+                        <div class="notification-item" data-route="tickets">
                             <div class="notification-icon success">
                                 <i class="fas fa-user-check"></i>
                             </div>
@@ -80,7 +107,7 @@
                                 <span class="notification-time">Вчора, 18:45</span>
                             </div>
                         </div>
-                        <div class="notification-item">
+                        <div class="notification-item" data-route="data-sources">
                             <div class="notification-icon info">
                                 <i class="fas fa-database"></i>
                             </div>
@@ -139,6 +166,7 @@
             </div>
         </div>
     </header>
+    </div>
 
     <!-- Main Content -->
     <main class="main-content">

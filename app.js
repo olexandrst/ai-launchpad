@@ -571,9 +571,9 @@ const ticketsData = [
 // Dispatcher categories
 const dispatcherCategories = [
     { id: 'compliance', name: 'Комплаєнс-перевірки', icon: 'fas fa-shield-alt', color: '#e31e24', count: 3 },
-    { id: 'court', name: 'Судові справи', icon: 'fas fa-gavel', color: '#16181c', count: 2 },
-    { id: 'labor', name: 'Трудові відносини', icon: 'fas fa-users', color: '#3a3f47', count: 5 },
-    { id: 'contracts', name: 'Договірна робота', icon: 'fas fa-file-contract', color: '#b3121d', count: 4 }
+    { id: 'court', name: 'Судові справи', icon: 'fas fa-gavel', color: '#4b5563', count: 2 },
+    { id: 'labor', name: 'Трудові відносини', icon: 'fas fa-users', color: '#b3121d', count: 5 },
+    { id: 'contracts', name: 'Договірна робота', icon: 'fas fa-file-contract', color: '#6b7280', count: 4 }
 ];
 
 // Data sources
@@ -1235,6 +1235,69 @@ userProfile?.addEventListener('click', (e) => {
 document.addEventListener('click', () => {
     notificationsDropdown?.classList.remove('active');
     profileDropdown?.classList.remove('active');
+});
+
+// ==================== NOTIFICATION ROUTING ====================
+function routeNotification(item) {
+    const route = item.dataset.route;
+    if (!route) return;
+
+    // mark as read + update unread badge
+    if (item.classList.contains('unread')) {
+        item.classList.remove('unread');
+        const badge = document.querySelector('.notifications .badge');
+        if (badge) {
+            const n = Math.max(0, (parseInt(badge.textContent, 10) || 1) - 1);
+            badge.textContent = n;
+            badge.style.display = n === 0 ? 'none' : '';
+        }
+    }
+
+    // these screens live under the "Кабінет юриста" section
+    currentMainTile = 'lawyer-cabinet';
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+    if (route === 'ticket') {
+        const ticket = ticketsData.find(t => t.id === item.dataset.ticket);
+        if (ticket) { openTicketDetail(ticket); return; }
+        renderTickets();
+        showScreen('myTicketsScreen');
+    } else if (route === 'tickets') {
+        renderTickets();
+        showScreen('myTicketsScreen');
+    } else if (route === 'dispatcher') {
+        renderDispatcherCategories();
+        showScreen('dispatcherScreen');
+    } else if (route === 'data-sources') {
+        renderDataSources();
+        showScreen('dataSourcesScreen');
+    }
+}
+
+document.querySelectorAll('.notification-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationsDropdown?.classList.remove('active');
+        routeNotification(item);
+    });
+});
+
+document.getElementById('viewAllNotifications')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    notificationsDropdown?.classList.remove('active');
+    currentMainTile = 'lawyer-cabinet';
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    renderTickets();
+    showScreen('myTicketsScreen');
+});
+
+// ==================== LANGUAGE TOGGLE (visual) ====================
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    });
 });
 
 // Profile menu
