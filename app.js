@@ -896,6 +896,7 @@ function renderTickets(filter = 'all') {
             <div class="ticket-main">
                 <div class="ticket-header">
                     <span class="ticket-id">${ticket.id}</span>
+                    <span class="ticket-cat-chip">${getCategoryName(ticket.category)}</span>
                     <span class="ticket-status-badge ${ticket.status}">${getStatusText(ticket.status)}</span>
                 </div>
                 <h4 class="ticket-title">${ticket.title}</h4>
@@ -913,6 +914,21 @@ function renderTickets(filter = 'all') {
 
         item.addEventListener('click', () => openTicketDetail(ticket));
         container.appendChild(item);
+    });
+
+    updateTicketStats(filter);
+}
+
+function getTicketCount(filter) {
+    return filter === 'all' ? ticketsData.length : ticketsData.filter(t => t.status === filter).length;
+}
+
+function updateTicketStats(activeFilter = 'all') {
+    document.querySelectorAll('.ticket-stat-card[data-filter]').forEach(card => {
+        const f = card.dataset.filter;
+        const valEl = card.querySelector('.ticket-stat-value');
+        if (valEl) valEl.textContent = getTicketCount(f);
+        card.classList.toggle('active', f === activeFilter);
     });
 }
 
@@ -1184,7 +1200,7 @@ function renderFavorites() {
 
 document.getElementById('goToHomeBtn')?.addEventListener('click', () => {
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    document.querySelector('.nav-link[data-nav="home"]').classList.add('active');
+    document.querySelector('.nav-link[data-nav="home"]')?.classList.add('active');
     showScreen('homeScreen');
 });
 
@@ -1210,32 +1226,46 @@ document.querySelectorAll('.nav-link').forEach(link => {
 document.getElementById('logoLink')?.addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    document.querySelector('.nav-link[data-nav="home"]').classList.add('active');
+    document.querySelector('.nav-link[data-nav="home"]')?.classList.add('active');
     showScreen('homeScreen');
 });
 
-// ==================== DROPDOWNS ====================
+// ==================== CENTERED POPUPS ====================
 const notificationsBtn = document.getElementById('notificationsBtn');
 const notificationsDropdown = document.getElementById('notificationsDropdown');
 const userProfile = document.getElementById('userProfile');
 const profileDropdown = document.getElementById('profileDropdown');
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsModal = document.getElementById('settingsModal');
+const popupOverlay = document.getElementById('popupOverlay');
 
-notificationsBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    notificationsDropdown.classList.toggle('active');
-    profileDropdown?.classList.remove('active');
-});
-
-userProfile?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    profileDropdown.classList.toggle('active');
-    notificationsDropdown?.classList.remove('active');
-});
-
-document.addEventListener('click', () => {
+function closePopups() {
     notificationsDropdown?.classList.remove('active');
     profileDropdown?.classList.remove('active');
+    settingsModal?.classList.remove('active');
+    popupOverlay?.classList.remove('active');
+    document.body.classList.remove('popup-open');
+}
+
+function openPopup(panel) {
+    if (!panel) return;
+    const alreadyOpen = panel.classList.contains('active');
+    closePopups();
+    if (alreadyOpen) return; // clicking the same icon again closes it
+    popupOverlay?.classList.add('active');
+    panel.classList.add('active');
+    document.body.classList.add('popup-open');
+}
+
+notificationsBtn?.addEventListener('click', (e) => { e.stopPropagation(); openPopup(notificationsDropdown); });
+userProfile?.addEventListener('click', (e) => { e.stopPropagation(); openPopup(profileDropdown); });
+settingsBtn?.addEventListener('click', (e) => { e.stopPropagation(); openPopup(settingsModal); });
+
+popupOverlay?.addEventListener('click', closePopups);
+document.querySelectorAll('[data-close-popup]').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); closePopups(); });
 });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePopups(); });
 
 // ==================== NOTIFICATION ROUTING ====================
 function routeNotification(item) {
@@ -1277,7 +1307,7 @@ function routeNotification(item) {
 document.querySelectorAll('.notification-item').forEach(item => {
     item.addEventListener('click', (e) => {
         e.stopPropagation();
-        notificationsDropdown?.classList.remove('active');
+        closePopups();
         routeNotification(item);
     });
 });
@@ -1285,17 +1315,30 @@ document.querySelectorAll('.notification-item').forEach(item => {
 document.getElementById('viewAllNotifications')?.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    notificationsDropdown?.classList.remove('active');
+    closePopups();
     currentMainTile = 'lawyer-cabinet';
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     renderTickets();
     showScreen('myTicketsScreen');
 });
 
-// ==================== LANGUAGE TOGGLE (visual) ====================
-document.querySelectorAll('.lang-btn').forEach(btn => {
+// ==================== TICKET STATUS FILTER CARDS ====================
+document.querySelectorAll('.ticket-stat-card[data-filter]').forEach(card => {
+    card.addEventListener('click', () => {
+        renderTickets(card.dataset.filter);
+    });
+});
+
+// ==================== SETTINGS MODAL CONTROLS ====================
+const themeSwitch = document.getElementById('themeSwitch');
+themeSwitch?.addEventListener('change', () => {
+    document.body.classList.toggle('dark-theme', themeSwitch.checked);
+    localStorage.setItem('theme', themeSwitch.checked ? 'dark' : 'light');
+});
+
+document.querySelectorAll('.settings-seg .seg').forEach(btn => {
     btn.addEventListener('click', () => {
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.settings-seg .seg').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     });
 });
@@ -1305,7 +1348,7 @@ document.querySelectorAll('.profile-menu-item').forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         const action = item.dataset.action;
-        profileDropdown.classList.remove('active');
+        closePopups();
 
         if (action === 'my-profile' || action === 'settings') {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -1410,6 +1453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFavorites();
 
     const savedTheme = localStorage.getItem('theme');
+    if (themeSwitch) themeSwitch.checked = savedTheme === 'dark';
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-theme');
         document.querySelectorAll('.theme-option').forEach(o => {
