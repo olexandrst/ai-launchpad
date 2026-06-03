@@ -11,14 +11,28 @@
 <body>
     <!-- Minimal top actions: Notifications, Settings, Profile -->
     <div class="top-actions">
-            <div class="top-action notifications" id="notificationsBtn" title="Сповіщення">
-                <i class="fas fa-bell"></i>
-                <span class="badge">5</span>
-                <!-- Notifications Dropdown -->
-                <div class="notifications-dropdown" id="notificationsDropdown">
+        <button class="top-action notifications" id="notificationsBtn" title="Сповіщення">
+            <i class="fas fa-bell"></i>
+            <span class="badge">5</span>
+        </button>
+        <button class="top-action" id="settingsBtn" title="Налаштування">
+            <i class="fas fa-cog"></i>
+        </button>
+        <button class="top-action user-profile" id="userProfile" title="Профіль">
+            <i class="fas fa-user"></i>
+        </button>
+    </div>
+
+    <!-- Centered popups -->
+    <div class="popup-overlay" id="popupOverlay"></div>
+
+    <div class="popup-modal notifications-dropdown" id="notificationsDropdown" role="dialog" aria-modal="true">
                     <div class="dropdown-header">
                         <h4>Сповіщення</h4>
-                        <a href="#" class="mark-all-read">Позначити всі як прочитані</a>
+                        <div class="dropdown-header-actions">
+                            <a href="#" class="mark-all-read">Позначити всі як прочитані</a>
+                            <button class="popup-close" data-close-popup title="Закрити"><i class="fas fa-times"></i></button>
+                        </div>
                     </div>
                     <div class="notifications-list">
                         <div class="notification-item unread" data-route="ticket" data-ticket="TK-2026-0089">
@@ -70,16 +84,11 @@
                     <div class="dropdown-footer">
                         <a href="#" id="viewAllNotifications">Переглянути всі сповіщення</a>
                     </div>
-                </div>
-            </div>
-            <button class="top-action" id="settingsBtn" title="Налаштування">
-                <i class="fas fa-cog"></i>
-            </button>
-            <div class="top-action user-profile" id="userProfile" title="Профіль">
-                <i class="fas fa-user"></i>
-                <!-- Profile Dropdown -->
-                <div class="profile-dropdown" id="profileDropdown">
+    </div>
+
+    <div class="popup-modal profile-dropdown" id="profileDropdown" role="dialog" aria-modal="true">
                     <div class="profile-dropdown-header">
+                        <button class="popup-close" data-close-popup title="Закрити"><i class="fas fa-times"></i></button>
                         <div class="profile-avatar-large">
                             <img src="https://ui-avatars.com/api/?name=Олена+Петренко&background=e31e24&color=fff&size=80" alt="User">
                         </div>
@@ -108,8 +117,34 @@
                             <span>Вийти з системи</span>
                         </a>
                     </div>
+    </div>
+
+    <div class="popup-modal settings-modal" id="settingsModal" role="dialog" aria-modal="true">
+        <div class="settings-modal-header">
+            <h4><i class="fas fa-cog"></i> Налаштування</h4>
+            <button class="popup-close" data-close-popup title="Закрити"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="settings-modal-body">
+            <div class="settings-row">
+                <div class="settings-row-label"><i class="fas fa-moon"></i><span>Темна тема</span></div>
+                <label class="switch"><input type="checkbox" id="themeSwitch"><span class="switch-slider"></span></label>
+            </div>
+            <div class="settings-row">
+                <div class="settings-row-label"><i class="fas fa-language"></i><span>Мова інтерфейсу</span></div>
+                <div class="settings-seg">
+                    <button class="seg active" data-lang="ua">UA</button>
+                    <button class="seg" data-lang="en">EN</button>
                 </div>
             </div>
+            <div class="settings-row">
+                <div class="settings-row-label"><i class="fas fa-envelope"></i><span>Сповіщення на пошту</span></div>
+                <label class="switch"><input type="checkbox" checked><span class="switch-slider"></span></label>
+            </div>
+            <div class="settings-row">
+                <div class="settings-row-label"><i class="fas fa-shield-alt"></i><span>Двофакторна автентифікація</span></div>
+                <label class="switch"><input type="checkbox" checked><span class="switch-slider"></span></label>
+            </div>
+        </div>
     </div>
 
     <!-- Main Content -->

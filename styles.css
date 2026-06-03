@@ -5790,9 +5790,9 @@ body.dark-theme .ticket-reply-section textarea { background: rgba(255, 255, 255,
 /* ---------- Minimal top-right action icons ---------- */
 .top-actions {
     position: fixed;
-    top: 18px;
-    right: 24px;
-    z-index: 300;
+    top: 2rem;
+    right: 2rem;
+    z-index: 402;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -5852,8 +5852,8 @@ body.dark-theme .ticket-reply-section textarea { background: rgba(255, 255, 255,
 }
 .top-actions .top-action.user-profile { color: #fff; }
 
-/* give page content room so floating icons never overlap titles */
-.main-content { padding-top: 4.25rem; }
+/* icons sit on the same row as the "Назад" buttons */
+.main-content { padding-top: 2rem; }
 
 /* ---------- Home brand title ---------- */
 .welcome-section { margin-top: 0.5rem; }
@@ -5962,9 +5962,185 @@ body.dark-theme .ticket-cat-chip { background: rgba(255, 255, 255, 0.08); color:
 
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
-    .top-actions { top: 12px; right: 12px; gap: 8px; }
+    .top-actions { top: 1.25rem; right: 1.25rem; gap: 8px; }
     .top-actions .top-action { width: 40px; height: 40px; min-width: 40px; }
-    .main-content { padding-top: 3.75rem; }
+    .main-content { padding-top: 1.5rem; }
     .tickets-stats { grid-template-columns: repeat(2, 1fr); }
     .home-brand h1 { font-size: 1.7rem; }
+}
+
+/* ============================================================
+   CENTERED POPUPS (Notifications / Profile / Settings)
+   ============================================================ */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 18, 22, 0.5);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    z-index: 400;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.popup-overlay.active { opacity: 1; visibility: visible; }
+
+body.popup-open { overflow: hidden; }
+
+.popup-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -48%) scale(0.97);
+    width: min(440px, calc(100vw - 32px));
+    max-height: 82vh;
+    overflow-y: auto;
+    margin: 0;
+    z-index: 401;
+    background: var(--white);
+    border: 1px solid var(--glass-border-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 80px -20px rgba(16, 18, 22, 0.55);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+.popup-modal.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popup-close {
+    background: rgba(16, 18, 22, 0.06);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: var(--gray);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+.popup-close:hover { background: rgba(227, 30, 36, 0.12); color: var(--primary); }
+
+/* notifications modal header */
+.notifications-dropdown .dropdown-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+/* profile modal: place close in the top-right of the header */
+.profile-dropdown .profile-dropdown-header { position: relative; }
+.profile-dropdown .profile-dropdown-header .popup-close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+}
+.profile-dropdown .profile-dropdown-header .popup-close:hover { background: rgba(255, 255, 255, 0.35); color: #fff; }
+
+/* ---------- Settings modal ---------- */
+.settings-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.4rem;
+    border-bottom: 1px solid var(--light);
+}
+.settings-modal-header h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+.settings-modal-header h4 i { color: var(--primary); }
+.settings-modal-body { padding: 0.4rem 1.4rem 1.2rem; }
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid var(--light);
+}
+.settings-row:last-child { border-bottom: none; }
+.settings-row-label {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.92rem;
+    color: var(--dark);
+    font-weight: 500;
+}
+.settings-row-label i { width: 20px; text-align: center; color: var(--gray); }
+
+/* toggle switch */
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch-slider {
+    position: absolute;
+    inset: 0;
+    background: #cbd5e1;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.switch-slider::before {
+    content: '';
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.switch input:checked + .switch-slider { background: var(--primary); }
+.switch input:checked + .switch-slider::before { transform: translateX(20px); }
+
+/* segmented language control */
+.settings-seg {
+    display: inline-flex;
+    background: var(--light);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+}
+.settings-seg .seg {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0.32rem 0.85rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--gray);
+    transition: var(--transition);
+}
+.settings-seg .seg.active { background: var(--gradient-primary); color: #fff; box-shadow: var(--shadow-red-sm); }
+
+/* dark theme */
+body.dark-theme .popup-modal,
+body.dark-theme .settings-modal { background: var(--white); }
+body.dark-theme .settings-seg,
+body.dark-theme .switch-slider { background: rgba(255, 255, 255, 0.12); }
+
+@media (max-width: 768px) {
+    .popup-modal { width: calc(100vw - 24px); max-height: 86vh; }
 }
