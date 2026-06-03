@@ -570,10 +570,10 @@ const ticketsData = [
 
 // Dispatcher categories
 const dispatcherCategories = [
-    { id: 'compliance', name: 'Комплаєнс-перевірки', icon: 'fas fa-shield-alt', color: '#22c55e', count: 3 },
-    { id: 'court', name: 'Судові справи', icon: 'fas fa-gavel', color: '#ef4444', count: 2 },
-    { id: 'labor', name: 'Трудові відносини', icon: 'fas fa-users', color: '#6366f1', count: 5 },
-    { id: 'contracts', name: 'Договірна робота', icon: 'fas fa-file-contract', color: '#f59e0b', count: 4 }
+    { id: 'compliance', name: 'Комплаєнс-перевірки', icon: 'fas fa-shield-alt', color: '#e31e24', count: 3 },
+    { id: 'court', name: 'Судові справи', icon: 'fas fa-gavel', color: '#16181c', count: 2 },
+    { id: 'labor', name: 'Трудові відносини', icon: 'fas fa-users', color: '#3a3f47', count: 5 },
+    { id: 'contracts', name: 'Договірна робота', icon: 'fas fa-file-contract', color: '#b3121d', count: 4 }
 ];
 
 // Data sources
@@ -654,9 +654,9 @@ function openMainTile(tileId) {
 
 function getSubTileGradient(index) {
     const gradients = [
-        'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-        'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
-        'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)'
+        'linear-gradient(135deg, #f5232a 0%, #c30f17 100%)',
+        'linear-gradient(135deg, #2b2f37 0%, #121316 100%)',
+        'linear-gradient(135deg, #3a3f47 0%, #1a1d22 100%)'
     ];
     return gradients[index % gradients.length];
 }
@@ -943,7 +943,7 @@ function openTicketDetail(ticket) {
             <div class="message-header">
                 <div class="message-author">
                     <div class="author-avatar">
-                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(ticket.from)}&background=6366f1&color=fff&size=40" alt="${ticket.from}">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(ticket.from)}&background=e31e24&color=fff&size=40" alt="${ticket.from}">
                     </div>
                     <div class="author-info">
                         <span class="author-name">${ticket.from}</span>
