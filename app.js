@@ -896,6 +896,7 @@ function renderTickets(filter = 'all') {
             <div class="ticket-main">
                 <div class="ticket-header">
                     <span class="ticket-id">${ticket.id}</span>
+                    <span class="ticket-cat-chip">${getCategoryName(ticket.category)}</span>
                     <span class="ticket-status-badge ${ticket.status}">${getStatusText(ticket.status)}</span>
                 </div>
                 <h4 class="ticket-title">${ticket.title}</h4>
@@ -913,6 +914,21 @@ function renderTickets(filter = 'all') {
 
         item.addEventListener('click', () => openTicketDetail(ticket));
         container.appendChild(item);
+    });
+
+    updateTicketStats(filter);
+}
+
+function getTicketCount(filter) {
+    return filter === 'all' ? ticketsData.length : ticketsData.filter(t => t.status === filter).length;
+}
+
+function updateTicketStats(activeFilter = 'all') {
+    document.querySelectorAll('.ticket-stat-card[data-filter]').forEach(card => {
+        const f = card.dataset.filter;
+        const valEl = card.querySelector('.ticket-stat-value');
+        if (valEl) valEl.textContent = getTicketCount(f);
+        card.classList.toggle('active', f === activeFilter);
     });
 }
 
@@ -1184,7 +1200,7 @@ function renderFavorites() {
 
 document.getElementById('goToHomeBtn')?.addEventListener('click', () => {
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    document.querySelector('.nav-link[data-nav="home"]').classList.add('active');
+    document.querySelector('.nav-link[data-nav="home"]')?.classList.add('active');
     showScreen('homeScreen');
 });
 
@@ -1210,7 +1226,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
 document.getElementById('logoLink')?.addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    document.querySelector('.nav-link[data-nav="home"]').classList.add('active');
+    document.querySelector('.nav-link[data-nav="home"]')?.classList.add('active');
     showScreen('homeScreen');
 });
 
@@ -1292,12 +1308,18 @@ document.getElementById('viewAllNotifications')?.addEventListener('click', (e) =
     showScreen('myTicketsScreen');
 });
 
-// ==================== LANGUAGE TOGGLE (visual) ====================
-document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+// ==================== TICKET STATUS FILTER CARDS ====================
+document.querySelectorAll('.ticket-stat-card[data-filter]').forEach(card => {
+    card.addEventListener('click', () => {
+        renderTickets(card.dataset.filter);
     });
+});
+
+// ==================== SETTINGS (theme toggle) ====================
+document.getElementById('settingsBtn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isDark = document.body.classList.toggle('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
 // Profile menu
